@@ -1,0 +1,5 @@
+#!/bin/sh
+
+yarn build
+mv build/index.html build/200.html
+surge -p ./build -d ${SITE_URL:-cash-register.surge.sh} $@
