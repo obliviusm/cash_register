@@ -11,13 +11,14 @@ class App extends Component {
     this.state = {
       areProductsLoaded: false,
       products: [],
-      errorProducts: ""
+      errorProducts: "",
+      basket: [],
+      fullPrice: 0
     };
   }
 
   componentDidMount() {
     this.fetchProductsData();
-    // this.fetchBasketsData();
   }
 
   async fetchProductsData() {
@@ -36,33 +37,41 @@ class App extends Component {
     }
   }
 
-  async fetchFullPriceData() {
-    const result = await api.getFullPrice();
+  async fetchFullPriceData(newBasket) {
+    const result = await api.getFullPrice(newBasket);
 
     if (result.ok) {
       this.setState({
         isFullPriceLoaded: true,
+        basket: newBasket,
         fullPrice: result.price
       });
     } else {
       this.setState({
         isFullPriceLoaded: true,
+        basket: newBasket,
         errorFullPrice: result.error
       });
     }
   }
 
+  addProductToBasket = (code) => {
+    return () => {
+      const { basket } = this.state;
+      const newBasket = [...basket, code];
+      this.fetchFullPriceData(newBasket);
+    }
+  }
+
   render() {
-    const basket = ["GR1", "SR1", "GR1", "GR1", "CF1"];
-    const totalPrice = "22.45";
-    const { products, areProductsLoaded, errorProducts } = this.state;
+    const { products, areProductsLoaded, errorProducts, fullPrice, basket } = this.state;
 
     return (
       <div className="App">
         <h1>Products List</h1>
-        <ProductsList products={products} isLoaded={areProductsLoaded} error={errorProducts} />
+        <ProductsList products={products} isLoaded={areProductsLoaded} error={errorProducts} addProductToBasket={this.addProductToBasket} />
         <h1>Basket</h1>
-        <BasketSection basket={basket} totalPrice={totalPrice} />
+        <BasketSection basket={basket} fullPrice={fullPrice} />
       </div>
     );
   }

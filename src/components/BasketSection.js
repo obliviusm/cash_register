@@ -2,12 +2,14 @@ import React from 'react';
 
 const showBasket = (basket) => basket.join(", ");
 
-const BasketSection = ({basket, totalPrice}) => (
+const BasketSection = ({basket, fullPrice}) => (
   <table>
-    <tr>
-      <td>{showBasket(basket)}</td>
-      <td>{totalPrice} €</td>
-    </tr>
+    <tbody>
+      <tr>
+        <td>{showBasket(basket)}</td>
+        <td>{fullPrice} €</td>
+      </tr>
+    </tbody>
   </table>
 );
 

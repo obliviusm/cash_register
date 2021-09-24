@@ -19,8 +19,20 @@ const create = () => {
     return { ok: false, error: response.problem }
   }
 
+  const getFullPrice = async (basket) => {
+    const response = await api.get('/basket_price', { product_codes: basket });
+
+    if (response.ok) {
+      const { price } = response.data
+      return { ok: true, price }
+    }
+    console.log(response)
+    return { ok: false, error: response.problem }
+  }
+
   return {
-    getProducts
+    getProducts,
+    getFullPrice
   }
 }
 

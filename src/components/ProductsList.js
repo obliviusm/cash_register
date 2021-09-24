@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProductsList = ({products, isLoaded, error}) => {
+const ProductsList = ({products, isLoaded, error, addProductToBasket}) => {
   if (error) {
     return <div>Error: {error}</div>;
   } else if (!isLoaded) {
@@ -8,13 +8,16 @@ const ProductsList = ({products, isLoaded, error}) => {
   } else {
     return (
       <table>
-        {products.map(product => (
-          <tr>
-            <td>{product.code}</td>
-            <td>{product.name}</td>
-            <td>{product.price}</td>
-          </tr>
-        ))}
+        <tbody>
+          {products.map(product => (
+            <tr key={product.code}>
+              <td>{product.code}</td>
+              <td>{product.name}</td>
+              <td>{product.price}</td>
+              <td><button onClick={addProductToBasket(product.code)}>Add to Basket</button></td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     );
   }
