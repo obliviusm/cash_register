@@ -8,6 +8,10 @@ const create = () => {
     responseType: ApiConfig.responseType
   })
 
+  const getError = (response) => (
+    response.data && response.data.error || response.problem
+  )
+
   const getProducts = async () => {
     const response = await api.get('/products');
 
@@ -16,7 +20,7 @@ const create = () => {
       return { ok: true, products }
     }
     console.log(response)
-    return { ok: false, error: (response.data.error || response.problem) }
+    return { ok: false, error: getError(response) }
   }
 
   const getBasket = async (productCodes) => {
@@ -27,7 +31,7 @@ const create = () => {
       return { ok: true, basket }
     }
     console.log(response)
-    return { ok: false, error: (response.data.error || response.problem) }
+    return { ok: false, error: getError(response) }
   }
 
   return {
