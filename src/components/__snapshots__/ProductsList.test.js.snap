@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders basket 1`] = `ReactWrapper {}`;
+
+exports[`renders products list 1`] = `ReactWrapper {}`;
