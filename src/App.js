@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import api from './services/api';
 import './App.css';
 import ProductsList from './components/ProductsList.js';
-import BasketSection from './components/BasketSection.js';
+import Basket from './components/Basket.js';
 
 class App extends Component {
   constructor(props) {
@@ -12,8 +12,9 @@ class App extends Component {
       areProductsLoaded: false,
       products: [],
       errorProducts: "",
-      basket: [],
-      fullPrice: 0
+      basket: { productCodes: [], price: 0 },
+      isBasketLoaded: false,
+      errorBasket: ""
     };
   }
 
@@ -37,41 +38,40 @@ class App extends Component {
     }
   }
 
-  async fetchFullPriceData(newBasket) {
-    const result = await api.getFullPrice(newBasket);
+  async fetchBasketData(newProductCodes) {
+    const result = await api.getBasket(newProductCodes);
 
     if (result.ok) {
       this.setState({
-        isFullPriceLoaded: true,
-        basket: newBasket,
-        fullPrice: result.price
+        isBasketLoaded: true,
+        basket: result.basket,
       });
     } else {
       this.setState({
-        isFullPriceLoaded: true,
-        basket: newBasket,
-        errorFullPrice: result.error
+        isBasketLoaded: true,
+        errorBasket: result.error
       });
     }
   }
 
-  addProductToBasket = (code) => {
+  addProductToBasket = (productCode) => {
     return () => {
-      const { basket } = this.state;
-      const newBasket = [...basket, code];
-      this.fetchFullPriceData(newBasket);
+      const { productCodes } = this.state.basket;
+      const newProductCodes = [...productCodes, productCode];
+      this.fetchBasketData(newProductCodes);
     }
   }
 
   render() {
-    const { products, areProductsLoaded, errorProducts, fullPrice, basket } = this.state;
+    const { products, areProductsLoaded, errorProducts,
+      basket, isBasketLoaded, errorBasket } = this.state;
 
     return (
       <div className="App">
         <h1>Products List</h1>
         <ProductsList products={products} isLoaded={areProductsLoaded} error={errorProducts} addProductToBasket={this.addProductToBasket} />
         <h1>Basket</h1>
-        <BasketSection basket={basket} fullPrice={fullPrice} />
+        <Basket basket={basket} isLoaded={isBasketLoaded} error={errorBasket} />
       </div>
     );
   }

@@ -19,12 +19,12 @@ const create = () => {
     return { ok: false, error: response.problem }
   }
 
-  const getFullPrice = async (basket) => {
-    const response = await api.get('/basket_price', { product_codes: basket });
+  const getBasket = async (productCodes) => {
+    const response = await api.get('/basket', { product_codes: productCodes });
 
     if (response.ok) {
-      const { price } = response.data
-      return { ok: true, price }
+      const { basket } = response.data
+      return { ok: true, basket }
     }
     console.log(response)
     return { ok: false, error: response.problem }
@@ -32,7 +32,7 @@ const create = () => {
 
   return {
     getProducts,
-    getFullPrice
+    getBasket
   }
 }
 
