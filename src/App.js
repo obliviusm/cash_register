@@ -13,7 +13,7 @@ class App extends Component {
       products: [],
       errorProducts: "",
       basket: { productCodes: [], price: 0 },
-      isBasketLoaded: false,
+      isBasketLoaded: true,
       errorBasket: ""
     };
   }

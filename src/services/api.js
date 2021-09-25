@@ -16,7 +16,7 @@ const create = () => {
       return { ok: true, products }
     }
     console.log(response)
-    return { ok: false, error: response.problem }
+    return { ok: false, error: (response.data.error || response.problem) }
   }
 
   const getBasket = async (productCodes) => {
@@ -27,7 +27,7 @@ const create = () => {
       return { ok: true, basket }
     }
     console.log(response)
-    return { ok: false, error: response.problem }
+    return { ok: false, error: (response.data.error || response.problem) }
   }
 
   return {
