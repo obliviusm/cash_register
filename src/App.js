@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import api from './services/api';
-import './App.css';
 import ProductsList from './components/ProductsList.js';
 import Basket from './components/Basket.js';
 
