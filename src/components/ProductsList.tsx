@@ -1,6 +1,7 @@
 import React from 'react';
+import { ProductsListProps } from '../types';
 
-const ProductsList = ({products, isLoaded, error, addProductToBasket}) => {
+const ProductsList: React.FC<ProductsListProps> = ({ products, isLoaded, error, addProductToBasket }) => {
   if (error) {
     return <div>Error: {error}</div>;
   } else if (!isLoaded) {

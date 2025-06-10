@@ -1,8 +1,9 @@
 import React from 'react';
+import { BasketProps } from '../types';
 
-const showProductCodes = (productCodes) => productCodes.join(", ");
+const showProductCodes = (productCodes: string[]): string => productCodes.join(", ");
 
-const Basket = ({basket, isLoaded, error}) => {
+const Basket: React.FC<BasketProps> = ({ basket, isLoaded, error }) => {
   if (error) {
     return <div>Error: {error}</div>;
   } else if (!isLoaded) {
