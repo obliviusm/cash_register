@@ -1,19 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useAtom } from 'jotai';
+import { useEffect } from 'react';
+import { productsAtom } from '../store/atoms';
 import api from '../services/api';
-import { Product } from '../types';
-
-interface ProductsState {
-  products: Product[];
-  isLoaded: boolean;
-  error: string;
-}
 
 export const useProducts = () => {
-  const [state, setState] = useState<ProductsState>({
-    products: [],
-    isLoaded: false,
-    error: ""
-  });
+  const [state, setState] = useAtom(productsAtom);
 
   const fetchProducts = async () => {
     const result = await api.getProducts();

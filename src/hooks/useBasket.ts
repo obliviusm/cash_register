@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useAtom } from 'jotai';
+import { basketAtom } from '../store/atoms';
 import api from '../services/api';
 import { Basket as BasketType } from '../types';
 
@@ -9,11 +10,7 @@ interface BasketState {
 }
 
 export const useBasket = () => {
-  const [state, setState] = useState<BasketState>({
-    basket: { productCodes: [], price: 0 },
-    isLoaded: true,
-    error: ""
-  });
+  const [state, setState] = useAtom(basketAtom);
 
   const fetchBasket = async (productCodes: string[]) => {
     const result = await api.getBasket(productCodes);
