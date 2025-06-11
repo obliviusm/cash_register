@@ -1,25 +1,28 @@
 import React from 'react';
-import { BasketProps } from '../types';
+import { useBasket } from '../hooks/useBasket';
 
-const showProductCodes = (productCodes: string[]): string => productCodes.join(", ");
+const Basket: React.FC = () => {
+  const { basket, isLoaded, error } = useBasket();
 
-const Basket: React.FC<BasketProps> = ({ basket, isLoaded, error }) => {
+  if (!isLoaded) {
+    return <div>Loading basket...</div>;
+  }
+
   if (error) {
     return <div>Error: {error}</div>;
-  } else if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    return (
-      <table>
-        <tbody>
-          <tr>
-            <td>{showProductCodes(basket.productCodes)}</td>
-            <td>{basket.price}</td>
-          </tr>
-        </tbody>
-      </table>
-    );
   }
-}
+
+  return (
+    <div>
+      <h2>Basket</h2>
+      <p>Total Price: ${basket.price}</p>
+      <ul>
+        {basket.productCodes.map(code => (
+          <li key={code}>{code}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
 export default Basket;

@@ -1,10 +1,7 @@
 import React from 'react';
 import { useProducts } from '../hooks/useProducts';
+import { useBasket } from '../hooks/useBasket';
 import { Product } from '../types';
-
-interface ProductsListProps {
-  addProductToBasket: (code: string) => () => void;
-}
 
 const ProductItem: React.FC<{ product: Product; onAdd: () => void }> = ({ product, onAdd }) => (
   <div>
@@ -14,8 +11,9 @@ const ProductItem: React.FC<{ product: Product; onAdd: () => void }> = ({ produc
   </div>
 );
 
-const ProductsList: React.FC<ProductsListProps> = ({ addProductToBasket }) => {
+const ProductsList: React.FC = () => {
   const { products, isLoaded, error } = useProducts();
+  const { addProduct } = useBasket();
 
   if (!isLoaded) {
     return <div>Loading products...</div>;
@@ -31,7 +29,7 @@ const ProductsList: React.FC<ProductsListProps> = ({ addProductToBasket }) => {
         <ProductItem
           key={product.code}
           product={product}
-          onAdd={addProductToBasket(product.code)}
+          onAdd={addProduct(product.code)}
         />
       ))}
     </div>
